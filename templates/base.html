@@ -15,17 +15,18 @@
 <body>
     {% block nav %}
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand" href="/">
             <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         </a>
 
         <div>
             {% if user.is_active %}
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/logout'">Logout</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/withdrawal'">Withdrawal</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/post/create'">글쓰기</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/logout'">로그아웃</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/withdrawal'">회원탈퇴</button>
             {% else %}
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/login'">Login</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/register'">Register</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/login'">로그인</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/auth/register'">회원가입</button>
             {% endif %}
         </div>
     </nav>
