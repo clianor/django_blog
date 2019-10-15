@@ -1,16 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 홈
 {% endblock %}
 
+{% block header %}
+<script src="{% static '/blog/js/infiniteScroll.js' %}" type="text/javascript"></script>
+{% endblock %}
+
 {% block contents %}
-<div class="container">
+<div id="container" class="container">
     {% for post in posts %}
-    < {% if post.create_at|date:'YmdHis' < post.update_at|date:'YmdHis' %}수정됨{% endif %}>
-    title:{{ post.title }}
-    contents:{{ post.contents | safe }}
-    <br>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="card-text my-1">author: {{ post.author.username }}</p>
+                <p class="card-text my-1"><small class="text-muted">created: {{ post.create_at|date:'Y-m-d H:i:s' }}</small></p>
+                {% if post.create_at|date:'YmdHis' < post.update_at|date:'YmdHis' %}
+                <p class="card-text my-1"><small class="text-muted">updated: {{ post.update_at|date:'Y-m-d H:i:s' }}</small></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </div>
+
+<script type="text/javascript">
+var postWrapperId = 'container';
+var paginatePath = '?page=';
+var lastPage = {{paginator.num_pages}};
+
+var test = new InfiniteScroll(paginatePath, postWrapperId, lastPage);
+test.detectScroll();
+</script>
 {% endblock %}

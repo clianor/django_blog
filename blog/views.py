@@ -11,6 +11,10 @@ class PostListView(ListView):
     template_name = 'blog/index.html'
     context_object_name = 'posts'
     model = Post
+    paginate_by = 7
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-create_at')
 
 
 class CreateForm(FormView):
