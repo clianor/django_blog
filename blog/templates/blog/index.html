@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+홈
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    {% for post in posts %}
+    < {% if post.create_at|date:'YmdHis' < post.update_at|date:'YmdHis' %}수정됨{% endif %}>
+    title:{{ post.title }}
+    contents:{{ post.contents | safe }}
+    <br>
+    {% endfor %}
+</div>
+{% endblock %}

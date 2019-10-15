@@ -1,9 +1,16 @@
 from django.contrib import messages
+from django.views.generic import ListView
 from django.views.generic.edit import FormView
 
 from blog.models import Post
 from users.models import User
 from . import forms
+
+
+class PostListView(ListView):
+    template_name = 'blog/index.html'
+    context_object_name = 'posts'
+    model = Post
 
 
 class CreateForm(FormView):
