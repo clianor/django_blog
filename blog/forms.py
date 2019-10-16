@@ -1,5 +1,4 @@
 from django import forms
-from django_summernote.widgets import SummernoteWidget
 
 
 class CreateForm(forms.Form):
@@ -21,9 +20,9 @@ class CreateForm(forms.Form):
     )
     contents = forms.CharField(
         error_messages={
-            'required': '내용을 입력해주세요',
+            'required': '내용을 입력해주세요.'
         },
-        widget=SummernoteWidget(attrs={'summernote': {'width': '100%'}}),
+        widget=forms.Textarea,
         label='내용',
     )
 
