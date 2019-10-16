@@ -1,10 +1,16 @@
 from django.contrib import messages
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
 
 from blog.models import Post
 from users.models import User
 from . import forms
+
+
+class PostDetailView(DetailView):
+    template_name = 'blog/detail.html'
+    queryset = Post.objects.all()
+    context_object_name = 'post'
 
 
 class PostListView(ListView):
