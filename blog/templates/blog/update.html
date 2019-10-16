@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+게시글 수정
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static '/summernote/summernote-bs4.css' %}">
+<script src="{% static '/summernote/summernote-bs4.min.js' %}"></script>
+<script src="{% static '/summernote/lang/summernote-ko-KR.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#id_contents').summernote({
+            tabsize: 4,
+            height: 400,
+            lang: 'ko-KR',
+        });
+    });
+</script>
+{% endblock %}
+
+{% block jumbotron %}
+<h1 class="display-5 text-center">게시글 수정</h1>
+<hr class="my-4">
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <div class="col-12">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            {% if field.name == 'contents' %}
+            {{field}}
+            {% else %}
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            <input class="form-control" type="{{field.field.widget.input_Type}}" id="{{field.id_for_label}}" name="{{field.name}}" value="{{field.value}}">
+            {% endif %}
+            {% if field.errors %}
+            <span style="color: red;">{{field.errors}}</span>
+            {% endif %}
+            {% endfor %}
+            <button class="btn btn-primary btn-block mb-4">수정</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

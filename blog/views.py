@@ -1,10 +1,24 @@
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 
 from blog.models import Post
 from users.models import User
 from . import forms
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = ['title', 'contents']
+    template_name = 'blog/update.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        post = Post.objects.filter(pk=self.kwargs['pk'], author=self.request.user)
+        if not post.exists():  # 유효성 조건 통과
+            form.add_erros('title', '수정에 실패하였습니다.')
+            return super().form_invalid(form)
+        return super().form_valid(form)
 
 
 class PostDetailView(DetailView):

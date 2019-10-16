@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
 from blog.views import PostListView
 
 urlpatterns = [
     path('', PostListView.as_view()),
     path('admin/', admin.site.urls),
-    path('auth/', include('users.urls')),
-    path('post/', include('blog.urls')),
+    path('auth/', include('users.urls', namespace='auth')),
+    path('post/', include('blog.urls', namespace='blog')),
 ]

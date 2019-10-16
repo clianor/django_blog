@@ -12,9 +12,14 @@
 {% block contents %}
 <div class="container">
     <div class="col-12">
-        <h1 class="text-center display-4" id="title"><strong>{{post.title}}</strong></h1>
-        <p>by <strong>{{post.author.username}}</strong></p>
-        <p>{{post.update_at|date:'Y-m-d H:i:s'}}{% if post.create_at|date:'Y-m-d H:i:s' < post.update_at|date:'Y-m-d H:i:s' %}<strong>수정됨</strong>{% endif %}</p>
+        <div class="container">
+            <h1 class="text-center display-4" id="title"><strong>{{post.title}}</strong></h1>
+            <p>by <strong>{{post.author.username}}</strong></p>
+            <p>{{post.update_at|date:'Y-m-d H:i:s'}}{% if post.create_at|date:'Y-m-d H:i:s' < post.update_at|date:'Y-m-d H:i:s' %}<strong>수정됨</strong>{% endif %}</p>
+            {% if post.author.pk == user.pk %}
+            <button class="btn btn-primary" onclick="location.href='/post/update/{{post.id}}'">수정</button>
+            {% endif %}
+        </div>
         <hr class="my-4">
         <div id="contents">
             {{post.contents|safe}}
