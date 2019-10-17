@@ -2,12 +2,13 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from django.views.generic import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
 from .forms import RegisterForm, LoginForm, WithdrawalForm
 
 
-class WithdrawalView(FormView):
+class WithdrawalView(LoginRequiredMixin, FormView):
     template_name = 'auth/withdrawal.html'
     form_class = WithdrawalForm
     success_url = '/auth/login'

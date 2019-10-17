@@ -1,13 +1,14 @@
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from blog.models import Post
 from users.models import User
 from . import forms
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'contents']
     template_name = 'blog/update.html'
@@ -37,7 +38,7 @@ class PostListView(ListView):
         return Post.objects.all().order_by('-create_at')
 
 
-class CreateForm(FormView):
+class CreateForm(LoginRequiredMixin, FormView):
     template_name = 'blog/create.html'
     form_class = forms.CreateForm
     success_url = '/'
