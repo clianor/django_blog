@@ -4,25 +4,26 @@
 게시글
 {% endblock %}
 
-{% block jumbotron %}
-<h1 class="display-5 text-center">게시글</h1>
-<hr class="my-4">
-{% endblock %}
-
 {% block contents %}
-<div class="container">
-    <div class="col-12">
-        <div class="container">
-            <h1 class="text-center display-4" id="title"><strong>{{post.title}}</strong></h1>
-            <p>by <strong>{{post.author.username}}</strong></p>
-            <p>{{post.update_at|date:'Y-m-d H:i:s'}}{% if post.create_at|date:'Y-m-d H:i:s' < post.update_at|date:'Y-m-d H:i:s' %}<strong>수정됨</strong>{% endif %}</p>
-            {% if post.author.pk == user.pk %}
-            <button class="btn btn-primary" onclick="location.href='/post/update/{{post.id}}'">수정</button>
-            {% endif %}
-        </div>
-        <hr class="my-4">
-        <div id="contents">
-            {{post.contents|safe}}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 mx-auto mt-5">
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">{{post.title}}</h3>
+                            <span class="d-inline mt-2">{{post.update_at}} {% if post.create_at|date:'Y-m-d H:i:s' < post.update_at|date:'Y-m-d H:i:s' %}<strong>수정됨</strong>{% endif %}</span>
+                            {% if post.author.pk == user.pk %}
+                            <button class="btn btn-primary" onclick="location.href='/post/update/{{post.id}}'">수정</button>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {{post.contents|safe}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

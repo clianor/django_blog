@@ -21,46 +21,56 @@
 </script>
 {% endblock %}
 
-{% block jumbotron %}
-<h1 class="display-5 text-center">글쓰기</h1>
-<hr class="my-4">
-{% endblock %}
-
 {% block contents %}
-<div class="container">
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show"{% endif %} role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 mx-auto mt-5">
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show"{% endif %} role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">게시글 작성</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" method="POST">
+                                {% csrf_token %}
 
-        {% for field in form %}
-        <div class="form-group">
-            {% if field.is_hidden %}
-            <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" {{field.is_required}} value="{% if user.is_active %}{{user.pk}}{% endif %}" />
-            {% else %}
-            {% if field.name == 'contents' %}
-            {{field}}
-            {% else %}
-            <label for="{{field.id_for_label}}">{{field.label}}</label>
-            <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" {{field.is_required}} />
-            {% endif %}
-            {% endif %}
+                                {% for field in form %}
+                                <div class="form-group">
+                                    {% if field.is_hidden %}
+                                    <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" {{field.is_required}} value="{% if user.is_active %}{{user.pk}}{% endif %}" />
+                                    {% else %}
+                                    {% if field.name == 'contents' %}
+                                    {{field}}
+                                    {% else %}
+                                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                                    <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" {{field.is_required}} />
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                                {% if field.errors %}
+                                <span style="color: red;">{{field.errors}}</span>
+                                {% endif %}
+                                {% endfor %}
+                                <button class="btn btn-primary btn-block mb-4">글쓰기</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% if field.errors %}
-        <span style="color: red;">{{field.errors}}</span>
-        {% endif %}
-        {% endfor %}
-        <button class="btn btn-primary btn-block mb-4">글쓰기</button>
-    </form>
+    </div>
 </div>
 {% endblock %}

@@ -10,29 +10,31 @@
 {% endblock %}
 
 {% block contents %}
-<div id="container" class="container">
-    {% for post in posts %}
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h5>
+<div class="container">
+    <div class="row">
+        <div id="wrapper" class="col-md-12 pt-5">
+            {% if posts %}
+                {% for post in posts %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{post.title}}</h2>
+                        <a href="{% url 'blog:detail' post.pk %}" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{post.update_at}} by
+                        <span style="color: cornflowerblue;">{{post.author.username}}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <p class="card-text my-1">author: {{ post.author.username }}</p>
-                <p class="card-text my-1"><small class="text-muted">created: {{ post.create_at|date:'Y-m-d H:i:s' }}</small></p>
-                {% if post.create_at|date:'YmdHis' < post.update_at|date:'YmdHis' %}
-                <p class="card-text my-1"><small class="text-muted">updated: {{ post.update_at|date:'Y-m-d H:i:s' }}</small></p>
-                {% endif %}
-            </div>
+                {% endfor %}
+            {% else %}
+            게시글없음
+            {% endif %}
         </div>
     </div>
-    {% endfor %}
 </div>
 
 <script type="text/javascript">
-var postWrapperId = 'container';
+var postWrapperId = 'wrapper';
 var paginatePath = '?page=';
 var lastPage = {{paginator.num_pages}};
 

@@ -4,23 +4,46 @@
 회원가입
 {% endblock %}
 
-{% block jumbotron %}
-<h1 class="display-5 text-center">회원가입</h1>
-<hr class="my-4">
-{% endblock %}
-
 {% block contents %}
-<div class="container">
-    <form method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group">
-            <label for="{{field.id_for_label}}">{{field.label}}</label>
-            <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}"/>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mx-auto pt-5 mt-5">
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show"{% endif %} role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">회원가입</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" method="POST">
+                                {% csrf_token %}
+
+                                {% for field in form %}
+                                <div class="form-group">
+                                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                                    <input class="form-control" type="{{field.field.widget.input_type}}" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" required/>
+                                </div>
+                                {% if field.errors %}<div style="color: red;">{{ field.errors }}</div>{% endif %}
+                                {% endfor %}
+                                <button type="submit" class="btn btn-success btn-lg btn-block float-right">회원가입</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="color: red;">{{ field.errors }}</div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">회원가입</button>
-    </form>
+    </div>
 </div>
 {% endblock %}

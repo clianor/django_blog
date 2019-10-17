@@ -11,36 +11,46 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     {% block header %}
     {% endblock %}
+
+    <style>
+        body {
+          padding-top: 56px;
+        }
+    </style>
 </head>
 <body>
     {% block nav %}
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="/">
-            <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-        </a>
-
-        <div>
-            {% if user.is_active %}
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='{% url 'blog:create' %}'">글쓰기</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='{% url 'auth:logout' %}'">로그아웃</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='{% url 'auth:withdrawal' %}'">회원탈퇴</button>
-            {% else %}
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='{% url 'auth:login' %}'">로그인</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='{% url 'auth:register' %}'">회원가입</button>
-            {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Blog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_active %}
+                        <li class="nav-item">
+                            <a href="{% url 'blog:create' %}" class="nav-link">글쓰기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'auth:logout' %}" class="nav-link">로그아웃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'auth:withdrawal' %}" class="nav-link">회원탈퇴</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'auth:login' %}" class="nav-link">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'auth:register' %}" class="nav-link">회원가입</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
     {% endblock %}
-
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            {% block jumbotron %}
-            <h1 class="display-5">Oraclian Simple Blog Project</h1>
-            <p class="lead">웹의 기초가 되는 CRUD를 베이스로한 블로그 프로젝트입니다.</p>
-            <hr class="my-4">
-            {% endblock %}
-        </div>
-    </div>
 
     {% block contents %}
     {% endblock %}
